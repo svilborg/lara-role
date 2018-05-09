@@ -19,16 +19,22 @@ class Resource
     {
         $userResources = [];
 
-        if ($request->user()) {
-            $userResources = $request->user()->resources;
-        }
+        $action = $request->route()->getAction();
 
-        // $actionName = $request->route()->getActionName();
-        $controller = $this->getControllerName($request);
-        $action = $this->getActionName($request);
+        // If ACL applied to action
+        if (isset($action[$this->name])) {
 
-        if (! isset($userResources[$controller]) || ! in_array($action, $userResources[$controller])) {
-            return abort(401, 'User not authorized to access resource.');
+            if ($request->user()) {
+                $userResources = $request->user()->resources;
+            }
+
+            // $actionName = $request->route()->getActionName();
+            $controller = $this->getControllerName($request);
+            $action = $this->getActionName($request);
+
+            if (! isset($userResources[$controller]) || ! in_array($action, $userResources[$controller])) {
+                return abort(401, 'User not authorized to access resource.');
+            }
         }
 
         return $next($request);

@@ -25,7 +25,7 @@ class Role
 
         $action = $request->route()->getAction();
 
-        // If AcL applied to action
+        // If ACL applied to action
         if (isset($action[$this->name])) {
 
             if (! in_array($userRole, $action[$this->name]['role'])) {

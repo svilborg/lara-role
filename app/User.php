@@ -33,6 +33,6 @@ class User extends Authenticatable
 
     public function getResourcesAttribute($value)
     {
-        return json_decode($value);
+        return json_decode($value, true);
     }
 }
