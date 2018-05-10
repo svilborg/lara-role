@@ -1,0 +1,10 @@
+language: php
+
+#php:
+#  - 7.1
+
+before_script:
+  - composer install --dev --no-interaction --prefer-source
+  - ./vendor/bin/phpunit
+
+script: ./vendor/bin/phpunit
